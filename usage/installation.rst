@@ -1,0 +1,26 @@
+===========================
+Getting started to *Sphinx*
+===========================
+
+The syntax is pretty much like *Markdown*. Are them related?
+
+Documenting objects
+-------------------
+
+.. py:function:: enumerate(sequence[, start=0])
+
+	Return an iterator that yields tuples of an index and an item of the 
+	*sequence*. (And so on.)
+
+
+the :py:func:`enumerate` function can be used for ...
+
+Referencing :py:func:`io.open`
+
+Testing some headings
+"""""""""""""""""""""
+
+.. autoclass:: astroph.random_code.FaradayRotation
+	:members:
+
+.. autofunction:: astroph.random_code.FaradayRotation._get_magnetic_field_map

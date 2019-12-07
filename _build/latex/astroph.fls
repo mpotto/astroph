@@ -1,0 +1,12 @@
+PWD D:/USP/IC/Astrofísica/astroph/_build/latex
+INPUT C:/Users/mateu/AppData/Local/MiKTeX/2.9/miktex/data/le/pdftex/pdflatex.fmt
+INPUT astroph.tex
+OUTPUT astroph.log
+INPUT sphinxmanual.cls
+INPUT sphinxmanual.cls
+INPUT C:/Users/mateu/AppData/Local/Programs/MiKTeX 2.9/tex/latex/base/report.cls
+INPUT C:/Users/mateu/AppData/Local/Programs/MiKTeX 2.9/tex/latex/base/report.cls
+INPUT C:/Users/mateu/AppData/Local/Programs/MiKTeX 2.9/tex/latex/base/size10.clo
+INPUT C:/Users/mateu/AppData/Local/Programs/MiKTeX 2.9/tex/latex/base/size10.clo
+INPUT C:/Users/mateu/AppData/Local/Programs/MiKTeX 2.9/tex/latex/base/inputenc.sty
+INPUT C:/Users/mateu/AppData/Local/Programs/MiKTeX 2.9/tex/latex/base/inputenc.sty
