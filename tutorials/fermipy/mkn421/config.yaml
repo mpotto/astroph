@@ -1,0 +1,53 @@
+data:
+# The data section defines the input data files for the analysis.
+
+  evfile : ft1.lst      # Path to FT1 files or list or list of files.          
+  scfile : ft2.fits     # Path to FT2 (spacecraft) file. The spacecraft FITS file with the time history of the spacecraft position, LAT orientation and LAT livetime. Also called an FT2 file.
+  ltcube : ltcube.fits  # Path to livetime cube.
+
+binning:
+# The binning section controls the spatial and binning of the data.
+
+  roiwidth   : 10.0     # width of the ROI in degrees.
+  binsz      : 0.1      # spatial bin size in degrees.
+  binsperdec : 8        # number of bins per decade.
+
+selection :
+# The selection section collects parameters relatedd to the data selection and target definition. The majority of the parameters are arguments to gtselect and gtmktime.
+
+  emin : 100            # Minimum energy (MeV)
+  emax : 316227.76      # Maximum energy (MeV)
+  zmax    : 90          # Maximum zenith angle.
+  evclass : 128         # Event class selection.
+  evtype  : 3           # Event type selection according to the IRF (in our case P8R2, Pass 8 Release 2)
+  tmin    : 239557414   # Minimum time (MET, Mission Elapsed Time)
+  tmax    : 428903014   # Maximum time (MET)
+  filter  : null        # Filter string for gtmktime selection.
+  target : 'mkn421'     # Object on which to center the ROI. Has precedence over ra/dec or glon/glat
+
+gtlike:
+# The gtlike section controls the setup of the likelihood analysis 
+
+  edisp : True                              # Enable correction for energy dispersion.
+  irfs : 'P8R2_SOURCE_V6'                   # Set the IRF (Instrument Response Function) string.
+  edisp_disable : ['isodiff','galdiff']     # List of sources for which edisp correction should be disabled.
+
+model:
+# The model section collects options that control the inclusion of point-source and difuse
+# components in the model. 'galdiff' and 'isodiff' sets the templates for the Galactic IEM
+# (Interstellar emission model) and istropic diffuse.
+
+  src_roiwidth : 15.0                                   # Width of square region in degrees centered on the ROI that selects sources for inclusion in the model. If this parameter is none  then no selection is applied. This selection will be ORed with the src_radius selection.
+  galdiff  : '$FERMI_DIFFUSE_DIR/gll_iem_v07.fits'      # Set the path to one or more galactic IEM mapcubes. A separate component will be generated for each item in this list.
+  isodiff  : 'iso_P8R2_SOURCE_V6_v06.txt'               # Set the path to one or more isotropic templates. A separate component will be generated for each item in this list.
+  catalogs : ['4FGL']                                   # List of catalogs that will be merged to form a master analysis catalog from which sources will be drawn. FGL stands for Fermi Gamma-ray LAT. 1FGL was released at 1 year, 2FGL at 2 year and 3FGL at 4 year. 4FGL was released on February 2019 and is based on 8 years (50 MeV - 1 TeV range).
+
+#components:
+# The components section gives the user the option to combine multiple data selections into a joint likelihood. It contains a list of dictionaries with the same hierarchy as the root analysis configuration. Each element of the list defines the analysis parameters for an independent sub-selection of the data. Any component not defined in the dictionary default to the value defined in the root config. 
+
+# Example (changing event types in the IRF)
+
+#    - { selection: { evtype : 4} }      # Set the evtype to PSF0 
+#    - { selection: { evtype : 8} }      # PSF1
+#    - { selection: { evtype : 16} }     # PSF2
+#    - { selection: { evtype : 32} }     # PSF3
