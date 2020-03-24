@@ -37,14 +37,13 @@ class MassProfile:
         j_factor, err = integrate.quad(expr, 0, np.inf, **kwargs)
         return j_factor, err
     
-    def _galactocentric_to_geocentric(self, r, theta):
-        """Convert between galactocentric and geocentric coordinate
-        systems.
-        
+    def _geocentric_to_galactocentric(self, s, theta):
+        """Convert between geocentric and galactocentric distances. 
+
         :param r: galactocentric distance.
         :param theta: geocentric angle positive from the GC.
         """
-        return np.sqrt(self._r_sun**2 + r**2 - 2*r*self._r_sun*np.cos(theta))
+        return np.sqrt(self._r_sun**2 + s**2 - 2*s*self._r_sun*np.cos(theta))
 
     
 class MassProfileNFW(MassProfile):
@@ -55,7 +54,7 @@ class MassProfileNFW(MassProfile):
         
     def density(self, r, theta=None, geocentric=False):
         if geocentric:
-            r = self._galactocentric_to_geocentric(r, theta)
+            r = self._geocentric_to_galactocentric(r, theta)
         return self.rho_s/((r/self.r_s)*(1+r/self.r_s)**2)
 
     
@@ -67,7 +66,7 @@ class MassProfileEinasto(MassProfile):
         
     def density(self, r, theta=None, geocentric=False):
         if geocentric:
-            r = self._galactocentric_to_geocentric(r, theta)
+            r = self._geocentric_to_galactocentric(r, theta)
         return self.rho_s * np.exp(-2/self.alpha*((r/self.r_s)**self.alpha-1))      
 
 class MassProfileIsothermal(MassProfile):
@@ -77,7 +76,7 @@ class MassProfileIsothermal(MassProfile):
     
     def density(self, r, theta=None, geocentric=False):
         if geocentric:
-            r = self._galactocentric_to_geocentric(r, theta)
+            r = self._geocentric_to_galactocentric(r, theta)
         return self.rho_s/(1+(r/self.r_s)**2)
     
 
@@ -88,7 +87,7 @@ class MassProfileBurkert(MassProfile):
         
     def density(self, r, theta=None, geocentric=False):
         if geocentric:
-            r = self._galactocentric_to_geocentric(r, theta)
+            r = self._geocentric_to_galactocentric(r, theta)
         return self.rho_s/((1+r/self.r_s)*(1+(r/self.r_s)**2))
     
 
@@ -99,6 +98,6 @@ class MassProfileMoore(MassProfile):
     
     def density(self, r, theta=None, geocentric=False):
         if geocentric:
-            r = self._galactocentric_to_geocentric(r, theta)
+            r = self._geocentric_to_galactocentric(r, theta)
         return self.rho_s*(self.r_s/r)**(1.16) * (1 + r/self.r_s)**(-1.84)
     
