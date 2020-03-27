@@ -4,3 +4,4 @@
 *.fits
 
 */__pycache__/*
+*.pyc

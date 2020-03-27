@@ -12,30 +12,35 @@ class MassProfile:
         self.rho_s = rho_s
         self._r_sun = 8.33
         self._rho_sun = 0.3
-             
-    def annihilation_j_factor(self, theta, **kwargs):
-        """Annihilation J-factor integral on l.o.s of
-        observer
-
+    
+    def j_factor(self, theta, factor_type='annihilation', **kwargs):
+        """J-factor integral on the observer l.o.s.
+        
         :param theta: angle between GC and the observer line of sight (los).
+        :param factor_type: j-factor type: annihilation or decay.
         :param *args: scipy integrate.quad arugments
         :return: integrated annihilation J-factor on los.
         """
-        expr = lambda s: (1/self._r_sun)*(self.density(s, theta, geocentric=True)/self._rho_sun)**2
+        if factor_type == "annihilation":
+            expr = lambda s: (1/self._r_sun)*(self.density(s, theta,geocentric=True)/self._rho_sun)**2
+        elif factor_type == "decay":
+            expr = lambda s: (1/self._r_sun)*(self.density(s, theta, geocentric=True)/self._rho_sun)
         j_factor, err = integrate.quad(expr, 0, np.inf, **kwargs)
         return j_factor, err
     
-    def decay_j_factor(self, theta, **kwargs):
-        """Decay J-factor integral on l.o.s of
-        observer
-
-        :param theta: angle between GC and the observer line of sight (los).
-        :param *args: scipy integrate.quad arugments
-        :return: integrated decay J-factor on los.
+    def j_factor_map(self, coord_grid, factor_type='annihilation', **kwargs):
+        """Bidimensional map of J-factors. 
+        
+        :param coord_grid: grid of angular coordinates in the galactic polar system.
+        :param factor_type: j-factor type: annihilation or decay.
+        :return: integrated j_factor at each grid position.
         """
-        expr = lambda s: (1/self._r_sun)*(self.density(s, theta, geocentric=True)/self._rho_sun)    
-        j_factor, err = integrate.quad(expr, 0, np.inf, **kwargs)
-        return j_factor, err
+        factors = []
+        for angle in coord_grid.flatten():
+            factors.append(self.j_factor(angle, factor_type, **kwargs)[0])
+        factors_grid = np.array(factors).reshape(coord_grid.shape)
+        return factors_grid
+        
     
     def _geocentric_to_galactocentric(self, s, theta):
         """Convert between geocentric and galactocentric distances. 
@@ -69,6 +74,7 @@ class MassProfileEinasto(MassProfile):
             r = self._geocentric_to_galactocentric(r, theta)
         return self.rho_s * np.exp(-2/self.alpha*((r/self.r_s)**self.alpha-1))      
 
+    
 class MassProfileIsothermal(MassProfile):
     """Isothermal dark matter denstiy profile"""
     def __init__(self, r_s=4.38, rho_s=1.387):
