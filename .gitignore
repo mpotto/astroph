@@ -3,3 +3,10 @@
 
 */__pycache__/*
 *.pyc
+
+# Avoid huge .fits files in Tutorials
+tutorials/fermipy/mkn421/*.fits
+tutorials/fermipy/query_images/
+tutorials/fermipy/test.fits
+
+
