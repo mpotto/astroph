@@ -10,8 +10,8 @@ class MassProfile:
     def __init__(self, r_s, rho_s):
         self.r_s = r_s
         self.rho_s = rho_s
-        self._r_sun = 8.33
-        self._rho_sun = 0.3
+        self._r_sun = 8.33 # kpc
+        self._rho_sun = 0.3 # GeV/cm^3
     
     def j_factor(self, theta, factor_type='annihilation', **kwargs):
         """J-factor integral on the observer l.o.s.
@@ -28,19 +28,40 @@ class MassProfile:
         j_factor, err = integrate.quad(expr, 0, np.inf, **kwargs)
         return j_factor, err
     
-    def j_factor_map(self, coord_grid, factor_type='annihilation', **kwargs):
+    def j_factor_map(self, L_coord, B_coord, delta_l, delta_b, factor_type='annihilation', **kwargs):
         """Bidimensional map of J-factors. 
         
-        :param coord_grid: grid of angular coordinates in the galactic polar system.
+        :param L_coord: grid of galactic polar longitudes.
+        :param B_coord: grid of galactic polar latitudes.
+        :param delta_l: spacing of galactic polar longitudes.
+        :param delta_b: spacing of galactic polar longitudes.
         :param factor_type: j-factor type: annihilation or decay.
         :return: integrated j_factor at each grid position.
         """
-        factors = []
-        for angle in coord_grid.flatten():
-            factors.append(self.j_factor(angle, factor_type, **kwargs)[0])
-        factors_grid = np.array(factors).reshape(coord_grid.shape)
-        return factors_grid
+        factors = np.zeros_like(L_coord)
+        for i in range(L_coord.shape[0]):
+            for j in range(B_coord.shape[0]):
+                l, b = L_coord[i, j], B_coord[i, j]
+                theta = np.arccos(np.cos(l)*np.cos(b))
+                aperture = delta_l*(np.sin(B_coord[i, j]+delta_b/2) - np.sin(B_coord[i, j]-delta_b/2))
+                factors[i, j] = aperture*self.j_factor(theta, factor_type, **kwargs)[0] 
+        return factors
         
+    def apertures_map(self, L_coord, B_coord, delta_l, delta_b):
+        """Bidimensional map of apertures
+        
+        :param L_coord: grid of galactic polar longitudes.
+        :param B_coord: grid of galactic polar latitudes.
+        :param delta_l: spacing of galactic polar longitudes.
+        :param delta_b: spacing of galactic polar longitudes.
+        :return: apertures at each grid cell.
+        """
+        apertures = np.zeros_like(L_coord)
+        for i in range(L_coord.shape[0]):
+            for j in range(B_coord.shape[0]):
+                aperture = delta_l*(np.sin(B_coord[i, j]+delta_b/2) - np.sin(B_coord[i, j]-delta_b/2))
+                apertures[i, j] = aperture
+        return apertures
     
     def _geocentric_to_galactocentric(self, s, theta):
         """Convert between geocentric and galactocentric distances. 
@@ -106,4 +127,4 @@ class MassProfileMoore(MassProfile):
         if geocentric:
             r = self._geocentric_to_galactocentric(r, theta)
         return self.rho_s*(self.r_s/r)**(1.16) * (1 + r/self.r_s)**(-1.84)
-    
+ 
