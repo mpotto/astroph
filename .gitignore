@@ -6,6 +6,8 @@
 
 # Avoid huge .fits files in Tutorials
 tutorials/fermipy/mkn421/*.fits
+assignments/fermi-config/*.fits
+assignments/fermi-config/fit-model/*.fits
 tutorials/fermipy/query_images/
 tutorials/fermipy/test.fits
 

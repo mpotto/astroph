@@ -1,8 +1,8 @@
 data:
 # The data section defines the input data files for the analysis.
 
-  evfile : ft1.lst      # Path to FT1 files or list or list of files.          
-  scfile : ft2.fits     # Path to FT2 (spacecraft) file. The spacecraft FITS file with the time history of the spacecraft position, LAT orientation and LAT livetime. Also called an FT2 file.
+  #evfile : ft1.lst      # Path to FT1 files or list or list of files.          
+  #scfile : ft2.fits     # Path to FT2 (spacecraft) file. The spacecraft FITS file with the time history of the spacecraft position, LAT orientation and LAT livetime. Also called an FT2 file.
   ltcube : ltcube.fits  # Path to livetime cube.
 
 binning:
