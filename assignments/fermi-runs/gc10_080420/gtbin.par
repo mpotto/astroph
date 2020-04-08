@@ -1,17 +1,17 @@
 #-------------------------------------------------------------------------------
 # General parameters.
-evfile,        f, a, "/home/mpotto/Pesquisa/astroph/assignments/fermi-config/ft1_00.fits", , , "Event data file name"
+evfile,        f, a, "/home/mpotto/Pesquisa/astroph/assignments/fermi-runs/gc10_080420/ft1_00.fits", , , "Event data file name"
 scfile,        f, a, "ft2.fits", , , "Spacecraft data file name"
-outfile,       f, a, "/home/mpotto/Pesquisa/astroph/assignments/fermi-config/ccube_00.fits", , , "Output file name"
+outfile,       f, a, "/home/mpotto/Pesquisa/astroph/assignments/fermi-runs/gc10_080420/ccube_00.fits", , , "Output file name"
 algorithm,     s, a, "CCUBE", CCUBE|CMAP|LC|PHA1|PHA2|HEALPIX, , "Type of output file"
 #-------------------------------------------------------------------------------
 
 #-------------------------------------------------------------------------------
 # Energy binning parameters.
 ebinalg,       s, a, "LOG", FILE|LIN|LOG, , "Algorithm for defining energy bins"
-emin,          r, a, 100, , , "Start value for first energy bin in MeV"
+emin,          r, a, 300, , , "Start value for first energy bin in MeV"
 emax,          r, a, 300000, , , "Stop value for last energy bin in MeV"
-enumbins,      i, a, 28, , , "Number of logarithmically uniform energy bins"
+enumbins,      i, a, 24, , , "Number of logarithmically uniform energy bins"
 denergy,       r, a, 0, , , "Width of linearly uniform energy bins in MeV"
 ebinfile,      f, a, "NONE", , , "Name of the file containing the energy bin definition"
 #-------------------------------------------------------------------------------
@@ -32,7 +32,7 @@ lcemax,        r, a, 0, 0., , "Upper bound of energy range in MeV"
 # Spatial binning parameters.
 nxpix,         i, a, 100, , , "Size of the X axis in pixels"
 nypix,         i, a, 100, , , "Size of the Y axis in pixels"
-binsz,         r, a, 0.1, , , "Image scale (in degrees/pixel)"
+binsz,         r, a, 0.01, , , "Image scale (in degrees/pixel)"
 coordsys,      s, a, "CEL", CEL|GAL, ,"Coordinate system (CEL - celestial, GAL -galactic)"
 xref,          r, a, 266.405, , , "First coordinate of image center in degrees (RA or galactic l)"
 yref,          r, a, -28.9362, , , "Second coordinate of image center in degrees (DEC or galactic b)"

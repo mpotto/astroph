@@ -1,0 +1,42 @@
+data:
+
+    evfile: ft1.fits
+    scfile: ft2.fits
+#    ltcube: ltcube.fits 
+    
+binning: 
+
+    roiwidth: 1.0
+    binsz: 0.01
+    binsperdec: 8 
+    
+selection:
+
+    emin: 300
+    emax: 300000
+    tmin: 378691203
+    tmax: 381369602
+    zmax: 90.0
+    evclass: 128
+    evtype: 3
+    # GC Coordinates
+    ra: 266.405 
+    dec: -28.9362
+
+gtlike:
+
+    edisp: True
+    irfs: 'P8R2_SOURCE_V6'
+    edisp_disable: ['isodiff', 'galdiff']
+
+model:
+    
+    src_roiwidth: 1.0
+    galdiff: '$FERMI_DIFFUSE_DIR/gll_iem_v07.fits'
+    isodiff: 'iso_P8R2_SOURCE_V6_v06.txt'
+    catalogs: ['4FGL']
+
+fileio:
+        
+    logfile: 'fermipy.log'
+    savefits: False
