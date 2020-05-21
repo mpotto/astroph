@@ -39,4 +39,6 @@ model:
 fileio:
         
     logfile: 'fermipy.log'
+    outdir: 'results'
     savefits: False
+    
