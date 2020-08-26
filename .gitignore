@@ -1,13 +1,9 @@
-.ipynb_checkpoints
-*/.ipynb_checkpoints/*
+.ipynb_checkpoints/
 
-*/__pycache__/*
+__pycache__/
 *.pyc
 
 # Avoid huge .fits files
-tutorials/fermipy/mkn421/*.fits
-assignments/fermi-runs/*/*.fits
-tutorials/fermipy/query_images/
-tutorials/fermipy/test.fits
-
-
+assignments/fermi-runs/*
+tutorials/fermipy/*
+assignments/maps/*.fits

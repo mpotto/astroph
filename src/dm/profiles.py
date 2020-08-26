@@ -1,6 +1,10 @@
 import scipy.integrate as integrate
 import numpy as np
 
+# Metric disclaimer: by convention, all distances are measured in kpc and
+# all densities in GeV/cm^3. Detours from the convention must be explicitly
+# noted. 
+
 class MassProfile:
     """Generic class to specify dark matter profiles.
     
@@ -22,7 +26,7 @@ class MassProfile:
         :return: integrated annihilation J-factor on los.
         """
         if factor_type == "annihilation":
-            expr = lambda s: (1/self._r_sun)*(self.density(s, theta,geocentric=True)/self._rho_sun)**2
+            expr = lambda s: (1/self._r_sun)*(self.density(s, theta, geocentric=True)/self._rho_sun)**2
         elif factor_type == "decay":
             expr = lambda s: (1/self._r_sun)*(self.density(s, theta, geocentric=True)/self._rho_sun)
         j_factor, err = integrate.quad(expr, 0, np.inf, **kwargs)
@@ -48,7 +52,8 @@ class MassProfile:
         return factors
         
     def apertures_map(self, L_coord, B_coord, delta_l, delta_b):
-        """Bidimensional map of apertures
+        """Bidimensional map of apertures. All angles should be
+        in rad.
         
         :param L_coord: grid of galactic polar longitudes.
         :param B_coord: grid of galactic polar latitudes.
