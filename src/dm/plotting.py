@@ -1,5 +1,5 @@
 import matplotlib.pyplot as plt
-import matlplotlib.colors as colors
+import matplotlib.colors as colors
 import numpy as np
 
 def profile_plot(j_factors, wcs, grid=False, cmap=plt.cm.plasma, **kwargs):
@@ -7,7 +7,7 @@ def profile_plot(j_factors, wcs, grid=False, cmap=plt.cm.plasma, **kwargs):
     ax = fig.add_subplot(111, projection=wcs)
     im = ax.imshow(j_factors, origin='lower', cmap=cmap, **kwargs)
     cbar = fig.colorbar(im, ax=ax)
-    cbar.set_label(r"$\dfrac{d\,J(\theta)}{d\Omega} \times \Delta \Omega_{\mathrm{bin}}$",  fontsize=14,  labelpad=10)
+    cbar.set_label(r"$\dfrac{d\,J(\theta)}{d\Omega} \times \Delta \Omega_{\mathrm{bin}}$ (GeV$^2$/cm$^5$)",  fontsize=14,  labelpad=10)
     ax.set_aspect('equal')
     ax.set_ylabel(r'$b$ ($\degree$)')
     ax.set_xlabel(r'$\ell$ ($\degree$)')
